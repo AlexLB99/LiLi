@@ -1,0 +1,55 @@
+#! /bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -n "Checking for g++... "
+command -v g++ 1> /dev/null 2> /dev/null
+if [[ $? -eq 0 ]]
+then
+	echo -e "${GREEN}[yes]${NC}"
+else
+	echo -e "${RED}[no]${NC}"
+	echo "please install g++"
+	exit 127;
+fi
+
+echo -n "Checking if libspdlog is installed... "
+ldconfig -p | grep libspdlog 1> /dev/null 2> /dev/null
+if [[ $? -eq 0 ]]
+then
+	echo -e "${GREEN}[yes]${NC}"
+else
+	echo -e "${RED}[no]${NC}"
+	echo "please install it: sudo apt install libspdlog-dev"
+	exit 127;
+fi
+
+echo -n "Checking if libfmt is installed... "
+ldconfig -p | grep libfmt 1> /dev/null 2> /dev/null
+if [[ $? -eq 0 ]]
+then
+	echo -e "${GREEN}[yes]${NC}"
+else
+	echo -e "${RED}[no]${NC}"
+	echo "please install it: sudo apt install libfmt-dev"
+	exit 127;
+fi
+
+echo -n "Checking if libcapstone is installed... "
+ldconfig -p | grep libcapstone 1> /dev/null 2> /dev/null
+if [[ $? -eq 0 ]]
+then
+	echo -e "${GREEN}[yes]${NC}"
+else
+	echo -e "${RED}[no]${NC}"
+	echo "please install it: sudo apt install libcapstone-dev"
+	exit 127;
+fi
+
+echo -e "${BLUE}All good, you can run make${NC}"
+
+
+cp Makefile.in Makefile
